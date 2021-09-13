@@ -18,3 +18,4 @@ con = sqlite3.connect(db)
 # TEST if db is not empty
 # users = pd.read_sql('select * from users limit 10',con)
 # print(users)
+

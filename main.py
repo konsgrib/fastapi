@@ -25,7 +25,6 @@ def get_db():
         db.close()
 
 
-
 # get user
 @app.get("/users/{user_id}", response_model=schemas.User)
 def read_user(user_id: int, db: Session = Depends(get_db)):

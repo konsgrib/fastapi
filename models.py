@@ -19,5 +19,3 @@ class User(Base):
     gender = Column(String)
     ip_address = Column(String)
     country_code = Column(String)
-
-
