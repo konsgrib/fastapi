@@ -13,7 +13,7 @@ import uvicorn
 models.Base.metadata.create_all(bind=engine)
 
 
-app = FastAPI()
+app = FastAPI(debug=True)
 
 
 # Dependency
@@ -44,7 +44,9 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 
-
+@app.post("/new/", response_model=schemas.User)
+def new_user(user:schemas.UserCreate,db:Session = Depends(get_db)):
+    return crud.create_user(db=db, user=user)
 
 # @app.get("/{id}")
 # def get_user(id:int):
@@ -55,4 +57,4 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", port=8000, reload=True,host='0.0.0.0')
+    uvicorn.run("main:app", port=8000, reload=True,host='0.0.0.0',use_colors=True)
