@@ -14,11 +14,11 @@ class UserCreate(UserBase):
 class User(UserBase):
     id:int
     first_name:str
-    last_name:str
-    email:str
-    gender:str
-    ip_address:str
-    country_code:str
+    last_name: Optional[str] = None
+    email: Optional[str] = None
+    gender: Optional[str] = None
+    ip_address: Optional[str] = None
+    country_code: Optional[str] = None
 
     class Config:
         orm_mode = True

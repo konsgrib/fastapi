@@ -34,6 +34,13 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
+#get users
+@app.get("/users/", response_model=List[schemas.User])
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    users = crud.get_users(db, skip=skip, limit=limit)
+    return users
+
+
 
 # create new user
 @app.post("/users/", response_model=schemas.User)
@@ -42,15 +49,6 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     if db_user:
         raise HTTPException(status_code=400, detail="User already registered")
     return crud.create_user(db=db, user=user)
-
-
-@app.post("/new/", response_model=schemas.User)
-def new_user(user:schemas.UserCreate,db:Session = Depends(get_db)):
-    return crud.create_user(db=db, user=user)
-
-# @app.get("/{id}")
-# def get_user(id:int):
-#     return {"id":id}
 
 
 
