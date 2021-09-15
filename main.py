@@ -52,6 +52,25 @@ def create_user(user: schemas.User, db: Session = Depends(get_db)):
 
 
 
+#update or create user
+@app.post("/users/{user_id}", response_model=schemas.User)
+def update_user(user: schemas.User, db: Session = Depends(get_db)):
+    db_user = crud.get_user(db,  user_id=user.id )
+    if db_user:
+        return crud.update_user(db=db,user=user)
+    else:
+        return crud.create_user(db=db, user=user)
+
+
+
+@app.delete("/users/{user_id}", response_model=str)
+def del_user(user_id: int, db: Session = Depends(get_db)):
+    db_user = crud.get_user(db, user_id=user_id)
+    if db_user:
+        return crud.del_user(db=db,user_id=db_user.id)
+    else:
+        return "No records to delete with id: {}".format(user_id)
+
 
 
 if __name__ == "__main__":

@@ -7,13 +7,13 @@ class UserBase(BaseModel):
     id: int
 
 
-class UserCreate(UserBase):
-    pass
+# class UserCreate(UserBase):
+#     pass
 
 
 class User(UserBase):
     id:int
-    first_name:str
+    first_name:Optional[str] = None
     last_name: Optional[str] = None
     email: Optional[str] = None
     gender: Optional[str] = None
