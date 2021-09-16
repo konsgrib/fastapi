@@ -7,8 +7,10 @@ def get_user(db: Session, user_id:int):
     return db.query(models.User).filter(models.User.id == user_id).first()
 
 
+
 def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
+
 
 
 def update_user(db: Session, user: schemas.User):
@@ -22,8 +24,7 @@ def update_user(db: Session, user: schemas.User):
     db.commit()
     if cnt:
         return db.query(models.User).filter(models.User.id == db_user.id).first()
-    # db.refresh(db_user)
-    # return user
+
 
 
 def del_user(db: Session, user_id:int):

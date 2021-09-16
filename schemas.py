@@ -3,15 +3,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 
-class UserBase(BaseModel):
-    id: int
-
-
-# class UserCreate(UserBase):
-#     pass
-
-
-class User(UserBase):
+class User(BaseModel):
     id:int
     first_name:Optional[str] = None
     last_name: Optional[str] = None
