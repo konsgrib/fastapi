@@ -9,7 +9,7 @@ import schemas
 from database import SessionLocal, engine
 import uvicorn
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-
+import jwt
 
 
 models.Base.metadata.create_all(bind=engine)
@@ -17,20 +17,22 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(debug=True)
 
-
+JWT_SECRET = 'secret_seed'
 # ==================================
 
 oauth2_scheme= OAuth2PasswordBearer(tokenUrl='token')
 
-# @app.post('/token')
+@app.post('/token')
 async def token(form_data: OAuth2PasswordRequestForm = Depends()):
-    return {'access_token':form_data.username + '_token'}
+    token = jwt.encode({'username':form_data.username}, JWT_SECRET)
+    return {'access_token':token}
+    # return {'access_token':form_data.username + '_token'}
 
 
 
-@app.get('/index')
-async def index(token: str = Depends(oauth2_scheme)):
-    return {'auth_token': token}
+# @app.get('/index')
+# async def index(token: str = Depends(oauth2_scheme)):
+#     return {'auth_token': token}
 # ==================================
 
 # Dependency
